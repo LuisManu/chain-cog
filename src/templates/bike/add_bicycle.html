@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load bootstrap_toolkit %}
+
+{% block back %}
+    <span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>
+{% endblock %}
+
+{% block title %}Add a Bicycle{% endblock %}
+
+{% block body_block %}
+ 
+<div class="well" style="padding: 0;">   
+    <h1 style="margin: 10px;">Post bike</h1>
+</div>
+
+<form role="form" id="bicycle_form" enctype="multipart/form-data" method="post" action="/bike/add_bicycle/">
+    
+    {% csrf_token %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden }}
+    {% endfor %}
+    <div class="col-md-3 col-lg-4"></div>
+    <div class="col-md-4 col-lg-3">
+        <p style="text-align: right; opacity: 0.4;">* required</p>
+        <p>{{ form.category }} *</p>
+        
+        <p><input class="form-control"  name="brand" type="text" maxlength="100" placeholder="Brand *"></p>
+        <p><input class="form-control" id="model_type" name="model_type" type="text" maxlength="100" placeholder="Model *"></p>
+        <p><strong>Main pic: * {{ form.main_image }}</strong></p>
+        <p><input class="form-control" id="year" name="year" type="text" maxlength="100" placeholder="Year"></p>
+        <p><input class="form-control" name="frame_fork" type="text" maxlength="100" placeholder="Frame / fork"></p>
+        <p><input class="form-control" name="shifters" type="text" maxlength="100" placeholder="Shifters"></p>
+        <p><input class="form-control" name="derailleurs" type="text" maxlength="100" placeholder="Front / rear derailleur"></p>
+        <p><input class="form-control" name="crankset_bb" type="text" maxlength="100" placeholder="Crankset / bottom bracket"></p>
+        <p><input class="form-control" name="cog_or_cassette" type="text" maxlength="100" placeholder="Cog or cassette"></p>
+        <p><input class="form-control" name="chain" type="text" maxlength="100" placeholder="Chain"></p>
+        <p><input class="form-control" name="pedals" type="text" maxlength="100" placeholder="Pedals"></p>
+        <p><input class="form-control" name="brakes_levers" type="text" maxlength="100" placeholder="Brakes / levers"></p>
+        <p><input class="form-control" name="headset" type="text" maxlength="100" placeholder="Headset"></p>
+        <p><input class="form-control" name="hubs" type="text" maxlength="100" placeholder="Front / rear hubs"></p>
+        <p><input class="form-control" name="rims" type="text" maxlength="100" placeholder="Rims"></p>
+        <p><input class="form-control" name="handlebars_stem" type="text" maxlength="100" placeholder="Handlebars / stem"></p>
+        <p><input class="form-control" name="saddle_seatpost" type="text" maxlength="100" placeholder="Saddle / seatpost"></p>
+        <p><input class="form-control" name="tires" type="text" maxlength="100" placeholder="Tires"></p>
+        <p>{{ form.summary }}</p>
+        
+        <p><strong>Optional pics: {{ form.image1 }}</p>
+        <p>{{ form.image2 }}</p>
+        <p>{{ form.image3 }}</p>
+        <p>{{ form.image4 }}</strong></p>
+        <button class="btn btn-primary" type="submit" name="submit">Post</button>
+    </div>
+    <div class="col-md-3 col-lg-4"></div>
+</form>
+
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load thumbnail %}
+
+{% block name %}<span class="title_text"><h4><strong>{{ user.username|upper }}</strong></h4>{% endblock %}
+
+{% block back %}<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>{% endblock %}
+
+{% block title %}{{ user.username|upper }}{% endblock %}
+
+{% block body_block %}
+
+
+<div class="well" style="padding-top: 0;">
+	<div class="row" style="padding-top: 15px;">
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0; text-align: right;">
+			{% thumbnail userprofile.picture "100x100" crop="center" as im %}
+			    <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+			{% endthumbnail %}
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			{% if userprofile.location %}
+				<p>{{ userprofile.location }}</p>
+			{% endif %}
+			{% if user.email %}
+				<p>Email: {{ user.email }}</p>
+			{% endif %}
+			{% if user.email %}
+				<p>Website: {{ user.website }}</p>
+			{% endif %}
+			{% if userprofile.about %}
+				<p>{{ userprofile.about }}</p>
+			{% endif %}
+		</div>
+	</div>
+</div>
+
+
+<div class="row">
+	{% for bicycle in bicycles %}
+		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="container" style="padding-bottom: 10px;">
+			<a href="{% url 'bicycle' bicycle.slug %}">
+				<div id="text">
+					{{ bicycle.brand }} {{ bicycle.model_type }}
+				</div>
+				<div id="image">
+					{% thumbnail bicycle.main_image "300x200" crop="center" as im %}
+					<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+					{% endthumbnail %}
+				</div>
+			</a>
+		</div>
+	{% endfor %}
+</div>
+
+
+{% endblock %}
+
+
+

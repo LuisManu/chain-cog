@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block back %}
+	<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>
+{% endblock %}
+
+{% block body_block %}
+
+
+<div class="row">
+	<div class="col-sm-4 col-md-4 col-lg-4"></div>
+	<form class="col-sm-4 col-md-4 col-lg-4 form-signin" role="form" method="post" action=".">
+		{% csrf_token %}
+		<h2 class="form-signin-heading">Sign in</h2>
+		<input class="form-control" placeholder="Username" id="id_username" maxlength="254" name="username" type="text" required autofocus=""/>
+		<input type="password" class="form-control" placeholder="Password" id="id_password" name="password" type="password" required />
+		<button class="btn btn-lg btn-primary btn-block" type="submit" value="Submit" />Sign in</button>
+	</form>
+</div>
+
+
+{% endblock %}

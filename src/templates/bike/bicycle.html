@@ -1,0 +1,196 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% load phileo_tags %}
+
+{% block title %}{{ bicycle.brand }} {{ bicycle.model_type }}{% endblock %}
+
+{% block back %}
+	<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>
+{% endblock %}
+
+{% block name %}
+	<span class="title_text"><strong>{{ bicycle.brand|upper }} {{bicycle.model_type|upper }}</strong></span>
+{% endblock %}
+
+{% block body_block %}
+
+
+<div class="row">
+    <div class="col-md-2 col-lg-2"></div>
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" style="padding: 0;">
+        <div id="bikeCarousel" class="owl-carousel">
+            <div class="item thumbnail" style="border:0;">
+            	{% thumbnail bicycle.main_image "600x400" crop="center" as im %}
+					<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+				{% endthumbnail %}
+            </div>
+            {% if bicycle.image1 %}
+	            <div class="item thumbnail" style="border:0;">
+	            	{% thumbnail bicycle.image1 "600x400" crop="center" as im %}
+						<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+					{% endthumbnail %}
+	            </div>
+            {% endif %}
+            {% if bicycle.image1 %}
+	            <div class="item thumbnail" style="border:0;">
+	            	{% thumbnail bicycle.image2 "600x400" crop="center" as im %}
+						<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+					{% endthumbnail %}
+	            </div>
+            {% endif %}
+            {% if bicycle.image1 %}
+	            <div class="item thumbnail" style="border:0;">
+	            	{% thumbnail bicycle.image3 "600x400" crop="center" as im %}
+						<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+					{% endthumbnail %}
+	            </div>
+            {% endif %}
+            {% if bicycle.image1 %}
+	            <div class="item thumbnail" style="border:0;">
+	            	{% thumbnail bicycle.image4 "600x400" crop="center" as im %}
+						<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+					{% endthumbnail %}
+	            </div>
+            {% endif %}
+        </div>
+    </div>
+    <div class="col-md-2 col-lg-2"></div>
+</div>
+
+
+<p style="text-align: center; margin: 0;">
+
+	<strong>
+		{% if bicycle.year %}
+		{{ bicycle.year }}{% endif %} {{ bicycle.brand }} {{bicycle.model_type }}
+	</strong>
+	by: <a href="{% url 'profile' bicycle.user %}">{{ bicycle.user|title }}</a>
+	<br />
+	<br />
+	
+</p>
+
+<div class="row" style="padding-left: 2%;">
+{% phileo_widget user bicycle %}
+</div>
+
+<div class="panel panel-primary" style="opacity: 0.95;">
+	<div class="panel-heading">
+		<h3 class="panel-title" id="recent_uploads">Bike specs:</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-sm-2 col-md-2 col-lg-2"></div>
+	<div class="col-sm-5 col-md-5 col-lg-5">
+			<p><strong>Category:</strong><br /> <a href="{% url 'category' bicycle.category|lower %}">{{ bicycle.category }}</a><br /></p>
+			{% if bicycle.frame_fork %}
+			<p><strong>Frame / fork:</strong><br /> {{ bicycle.frame_fork }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.shifters %}
+			<p><strong>Shifters:</strong><br /> {{ bicycle.shifters }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.derailleurs %}
+			<p><strong>Front / rear derailleurs:</strong><br /> {{ bicycle.derailleurs }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.crankset_bb %}
+			<p><strong>Crankset / BB:</strong><br /> {{ bicycle.crankset_bb }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.cog_or_cassette %}
+			<p><strong>Cog or cassette:</strong><br /> {{ bicycle.cog_or_cassette }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.chain %}
+			<p><strong>Chain:</strong><br /> {{ bicycle.chain }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.pedals %}
+			<p><strong>Pedals:</strong><br /> {{ bicycle.pedals }}<br /></p>
+			{% endif %}
+	</div>
+
+	<div class="col-sm-5 col-md-5 col-lg-5">
+
+			{% if bicycle.brake_levers %}
+			<p><strong>Brakes levers:</strong><br /> {{ bicycle.brakes_levers }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.headset %}
+			<p><strong>Headset:</strong><br /> {{ bicycle.headset }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.hubs %}
+			<p><strong>Hubs:</strong><br /> {{ bicycle.hubs }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.rims %}
+			<p><strong>Rims:</strong><br /> {{ bicycle.rims }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.handlebars_stem %}
+			<p><strong>Handlebars / stem:</strong><br /> {{ bicycle.handlebars_stem }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.saddle_seatpost %}
+			<p><strong>Saddle / seatpost:</strong><br /> {{ bicycle.saddle_seatpost }}<br /></p>
+			{% endif %}
+
+			{% if bicycle.tires %}
+			<p><strong>Tires:</strong><br /> {{ bicycle.tires }}<br /></p>
+			{% endif %}
+
+			
+
+	</div>
+</div>
+
+
+<div class="row">
+	<div class="col-lg-2"></div>
+	<div class="col-lg-10">
+		{% if bicycle.summary %}
+		<strong>Ride: </strong><br />{{ bicycle.summary|linebreaksbr }}<br />
+		{% endif %}
+	</div>	
+</div>
+
+
+<br />
+<br />
+
+
+<div class="col-lg-12 well">
+	{% if allbicycles %}
+		More bicycles by <a href="{% url 'profile' bicycle.user %}">{{ bicycle.user|title }}</a><br />
+			{% for bicycle in allbicycles %}
+				<button class="btn btn-sm" style="margin: 2px;">
+					<a href="{% url 'bicycle' bicycle.slug %}">{{ bicycle.brand }} {{ bicycle.model_type }}</a>
+				</button>
+		{% endfor %}
+	{% endif %}
+</div>
+
+
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'chaincog';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+
+
+{% endblock %}

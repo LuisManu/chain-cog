@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block back %}
+	<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>
+{% endblock %}
+
+{% block body_block %}
+
+
+<div class="row">
+	<div class="col-sm-4 col-md-4 col-lg-4"></div>
+	<form class="col-sm-4 col-md-4 col-lg-4" method="post" action="{% url 'registration_register' %}">
+		<h2 class="form-signin-heading">Register</a></h2>
+		{% csrf_token %}
+		<p><input class="form-control" id="username" type="text" name="username" maxlength="100" placeholder="Username" style="text-transform: lowercase;"></p>
+		<p><input class="form-control" id="email" type="email" name="email" maxlength="100" placeholder="email"></p>
+		<p><input class="form-control" id="password1" type="password" name="password1" maxlength="100" placeholder="password"></p>
+		<p><input class="form-control" id="password2" type="password" name="password2" placeholder="confirm password"></p>
+		<button class="btn btn-primary" type="submit" name="submit">Register</button>
+	</form>
+	<div class="col-sm-4 col-md-4 col-lg-4"></div>
+</div>
+
+
+{% endblock %}
+
+

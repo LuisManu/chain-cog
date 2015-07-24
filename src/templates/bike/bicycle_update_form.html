@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% load bootstrap_toolkit %}
+
+{% block body_block %}
+
+
+<div class="well" style="padding: 0;">
+	<h1 style="margin: 10px;"><strong>Update {{ bicycle }} {{ bicycle.model_type }}:<br />
+</div>
+<div class="col-lg-3"></div>
+<div class="col-lg-6">
+	<form action="" method="post">{% csrf_token %}
+	    {{ form|as_bootstrap }}
+	    <input type="submit" value="Update" />
+	</form>
+</div>
+<div class="col-lg-3"></div>
+
+
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% load phileo_tags %}
+
+{% load bootstrap_toolkit %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block back %}
+	<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>
+{% endblock %}
+
+{% block name %}
+	<span class="title_text"><h4><strong>DASHBOARD</strong></h4></span>
+{% endblock %}
+
+{% block body_block %}
+
+
+<div class="well" style="padding-top: 0; margin-bottom: 0;">
+	<h1>{{ user.username|title }}</h1>
+
+	(<a href="{% url 'profile' user.username %}">view profile</a> | <a href="/bike/{{ user.pk}}_update_user">edit profile</a> | <a href="{% url 'password_change' %}">change password</a>)
+</div>
+
+
+<div class="panel panel-primary" style="opacity: 0.95;">
+	<div class="panel-heading">
+		<h3 class="panel-title" id="recent_uploads">Your bicycles:</h3>
+	</div>
+</div>
+
+
+{% for bicycle in bicycles %}
+	<div class="row">
+		<p>
+			<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1" style="text-align: right;">
+				{% thumbnail bicycle.main_image "50x50" crop="center" as im %}
+					<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+				{% endthumbnail %}
+			</div>
+			<div class="col-xs-9 col-sm-3 col-md-3 col-lg-3">
+				<h4 style="margin: 0;">{{ bicycle.brand }} {{ bicycle.model_type }}</h4>
+				(<a href="{% url 'bicycle' bicycle.slug %}">view</a> / 
+				<a href="/bike/{{ bicycle.slug }}_update_form">edit</a> / 
+				<a href="{% url 'areyousure' bicycle.slug %}">delete</a>)
+			</div>
+		</p>
+	</div>
+{% endfor %}
+
+<div class="panel panel-primary" style="opacity: 0.95; margin-top: 8%;">
+	<div class="panel-heading">
+		<h3 class="panel-title" id="recent_uploads">Liked:</h3>
+	</div>
+</div>
+
+
+{% likes user as like_list %}
+    {% for like in like_list %}
+        <div class="row">
+			
+				<div class="col-xs-3 col-sm-1 col-md-1 col-lg-1" style="text-align: right;">
+        		<p><a href="/bike/{{ like.receiver|lower }}{{ like.receiver_object_id }}">{{ like.receiver }}</p>
+        	
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
+
+

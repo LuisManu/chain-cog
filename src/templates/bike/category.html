@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% block title %}{{ category_name }}{% endblock %}
+
+{% block back %}<span type=button class="glyphicon glyphicon-chevron-left btn" onClick="javascript:history.go(-1);"></span>{% endblock %}
+
+{% block name %}<span class="title_text"><h4><strong>{{ category_name|upper }}</strong></h4></span>{% endblock %}
+
+{% block body_block %}
+
+
+<div class="row well well-sm" style="text-align: center; margin-bottom: 10px;">
+	<div class="col-md-1 col-lg-1"></div>
+	{% for name in cat_names %}
+		<div class="col-xs-4 col-md-1 col-lg-1" style="padding: 0;">
+			<div class="row">
+				<a href="{% url 'category' name.slug %}">{{ name|upper }}</a> 
+			</div>
+		</div>
+	{% endfor %}
+	<div class="col-md-1 col-lg-1"></div>
+</div>
+
+
+<div class="row" style="padding-top: 10px; padding-bottom: 0;">
+	<div class="col-lg-3"></div>
+	<div class="col-lg-6">
+		<form method="get" action="/bike/search/">
+			{% csrf_token %} 
+				<div class="input-group">
+					
+							
+						<input type="text" name="q" id="id_q" class="form-control" placeholder="Search">
+						<span class="input-group-btn">
+							<button class="btn btn-default " type="button"><span class="glyphicon glyphicon-search" style="font-size: 18px; padding: 1px;"></span></button>
+						</span>
+					
+				</div>
+		</form>
+	</div>
+	<div class="col-lg-3"></div>
+</div>
+
+<hr />
+
+<!-- <br />
+{% if user.is_authenticated %}
+	<a href="{% url 'add_bicycle' %}">
+		<button type="button" class="btn btn-primary">
+			add bicycle
+		</button>
+	</a>
+{% endif %}
+<br />
+ -->
+
+<div class="row">
+	{% if category %}
+		{% if bicycles %}
+		{% for bicycle in bicycles %}
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="container" style="text-align: center;">
+				<a href="{% url 'bicycle' bicycle.slug %}">
+					<div id="text">
+						{{ bicycle.brand }} {{ bicycle.model_type }}<br />
+					</div>
+					<div id="image">
+						{% thumbnail bicycle.main_image "300x200" crop="center" as im %}
+						<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+						{% endthumbnail %}
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+		{% else %}
+			<strong>No bicycles currently in category.</strong>
+		{% endif %}
+	{% else %}
+		The specified category {{ category_name }} does not exist!
+	{% endif %}
+</div>
+
+
+<script type="text/javascript" src="{% static 'js/bike-ajax.js' %}"></script>
+{% endblock %}

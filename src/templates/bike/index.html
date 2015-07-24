@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% load staticfiles %}
+
+{% load thumbnail %}
+
+{% block title %}Index{% endblock %}
+
+{% block body_block %}
+
+
+{% if not user.is_authenticated %}
+	<div class="mainimage" style="background: url('{% static 'img/topbanner.jpg' %}') center center no-repeat; background-size: cover;">
+		<div class="row">
+			<div class="col-sm-3 col-md-4"></div>
+			<div class="col-sm-6 col-md-4" id="login_form">
+				<p>
+					<button type="button" class="btn btn-primary btn-lg btn-block" data-toggle="modal" data-target="#loginmodal">
+						Log in
+					</button>
+				</p>
+				
+				<button type="button" class="btn btn-default btn-lg btn-block" data-toggle="modal" data-target="#signup_modal">
+					Sign up
+				</button>
+			</div>
+			<div class="col-sm-3 col-md-4"></div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="browse_vbs" style="text-align: center;">
+				<button class="btn btn-sm btn-default">
+					<a href="#main">browse cc</a>
+				</button>
+			</div>
+		</div>
+	</div>
+{% endif %}
+
+
+<div class="well" style="margin-bottom: 0;">
+	<div class="row" id="main" style="padding-top: 20px;">
+		<div class="col-sm-4 col-md-4 col-lg-4"></div>
+		<div class="col-sm-4 col-md-4 col-lg-4">
+			{% if categories %}
+				<ul class="list-group">
+					{% for category in categories %}
+						<li class="list-group-item" style="text-align: center;">
+							<a href="{% url 'category' category.slug %}" style="color: #000000">{{ category.name }}</a>
+						</li>
+					{% endfor %}
+				</ul>
+			{% else %}
+				<strong>There are no categories present.</strong>
+			{% endif %}
+		</div>
+		<div class="col-sm-4 col-md-4 col-lg-4"></div>
+	</div>
+</div>
+
+
+<div class="panel panel-primary" style="opacity: 0.95;">
+	<div class="panel-heading">
+		<h3 class="panel-title" id="recent_uploads">Recent uploads:</h3>
+	</div>
+</div>
+		
+
+<div class="row">
+	{% if bicycles %}
+		{% for bicycle in bicycles %}
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" id="container" style="padding-bottom: 10px;">
+				<a href="{% url 'bicycle' bicycle.slug %}">
+					<div id="text">
+						{{ bicycle.brand }} {{ bicycle.model_type }}
+					</div>
+					<div id="image">
+						{% thumbnail bicycle.main_image "300x200" crop="center" as im %}
+							<img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}" />
+						{% endthumbnail %}
+					</div>
+				</a>
+			</div>
+		{% endfor %}
+</div>
+	{% else %}
+		<strong>There are no categories present.</strong>
+	{% endif %}
+	</div>
+</div>
+
+
+{% endblock %}
