@@ -1,3 +1,6 @@
+First version of Chain-cog.
+
+
 # chain-cog
 Python/Django project
 
